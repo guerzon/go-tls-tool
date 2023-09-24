@@ -1,0 +1,11 @@
+certs:
+  webapp.demolopolis.io:
+    serial: 1
+    validForYears: 1
+    dnsNames: ["webapp.demolopolis.io"]
+    subject:
+      country: PH
+      organization: Demolopolis
+      organizationalUnit: Demolopolis OU
+      locality: MNL
+      commonName: webapp.demolopolis.io
