@@ -1,2 +1,3 @@
-# gotls
-TLS client written in Go
+# go-tls-tool
+
+TLS tool written in Go for demo purposes.
