@@ -24,12 +24,7 @@ func Execute() {
 
 func init() {
 
-	// not needed atm
-	// cobra.OnInitialize(initConfig)
-
+	// to implement
 	rootCmd.PersistentFlags().StringP("version", "V", "", "Prints the gotls tool version")
 
 }
-
-// func initConfig() {
-// }

@@ -11,6 +11,7 @@ import (
 )
 
 // Generate a private key keyName located in keyPath with size keySize.
+// The key is stored as PEM-format.
 func CreatePrivateKey(keyName string, keyPath string, keySize int) error {
 
 	// generate the private key
