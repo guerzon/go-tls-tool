@@ -1,9 +1,10 @@
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/guerzon/go-tls-tool/pkg/ca"
 	"github.com/spf13/cobra"
@@ -29,19 +30,19 @@ var createKey = &cobra.Command{
 		fStat, statErr := os.Stat(filepath.Join(keyPath, keyName))
 		if statErr == nil {
 			if !force {
-				fmt.Printf("[-] Private key \"%s\" already exists. If you want to replace this key, pass the [--force | -f] command-line argument.\n", fStat.Name())
+				slog.Error("ca: private key " + fStat.Name() + " already exists. If you want to replace this key, pass the [--force | -f] command-line argument.")
 				os.Exit(1)
 			}
-			fmt.Printf("[+] Private key \"%s\" exists and will be replaced.\n", fStat.Name())
-			fmt.Printf("If a certificate was previously created, you need to recreate that certificate as well.\n\n")
+			slog.Warn("ca: private key " + fStat.Name() + " exists and will be replaced.")
+			slog.Warn("ca: if a certificate was previously created, you need to recreate that certificate as well.")
 		}
 
-		fmt.Println("[+] Creating a private key ...")
+		slog.Info("ca: creating a private key ...")
 		err := ca.CreatePrivateKey(keyName, keyPath, keySize)
 		if err != nil {
-			fmt.Printf("[-] Cannot create a private key. Error:\n%s\n", err)
+			slog.Error("ca: cannot create a private key. Error: ", "msg", err.Error())
 			os.Exit(2)
 		}
-		fmt.Printf("[+] Private key %s created with length %d.\n", keyName, keySize)
+		slog.Info("ca: private key " + keyName + " created with length " + strconv.Itoa(keySize) + ".")
 	},
 }

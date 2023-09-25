@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -30,18 +30,18 @@ var createCert = &cobra.Command{
 		fStat, statErr := os.Stat(filepath.Join(certPath, certName))
 		if statErr == nil {
 			if !force {
-				fmt.Printf("[-] Certificate \"%s\" already exists. If you want to replace this file, pass the [--force | -f] command-line argument.\n", fStat.Name())
+				slog.Error("ca: certificate " + fStat.Name() + " already exists. If you want to replace this file, pass the [--force | -f] command-line argument.")
 				os.Exit(1)
 			}
-			fmt.Printf("[+] Certificate \"%s\" exists and will be replaced.\n", certName)
+			slog.Warn("ca: certificate " + certName + " exists and will be replaced.")
 		}
 
-		fmt.Println("[+] Creating a CA certificate ...")
+		slog.Info("ca: creating a CA certificate ...")
 		err := ca.CreateCACert(certPath, certName, keyName, caConfig)
 		if err != nil {
-			fmt.Printf("[-] Cannot create CA certificate. Error:\n%s\n", err)
+			slog.Error("ca: cannot create CA certificate.", "msg", err.Error())
 			os.Exit(2)
 		}
-		fmt.Printf("[+] CA certificate %s created.\n", certName)
+		slog.Info("ca: certificate " + certName + " created.")
 	},
 }
