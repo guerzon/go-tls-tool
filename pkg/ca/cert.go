@@ -18,11 +18,21 @@ import (
 // and the private key keyPEM.
 func CreateCACert(certName string, certPath string, keyPEM string, caConfig string) error {
 
+	// load the private key
+	keyPEMFile, err := os.ReadFile(keyPEM)
+	if err != nil {
+		return fmt.Errorf("cannot open private key %s: %s", keyPEM, err)
+	}
+	privateKey, _ := pem.Decode(keyPEMFile)
+	if privateKey == nil {
+		return fmt.Errorf("no PEM data found in file %s", keyPEM)
+	}
+
+	// load the configuration
 	cfgFile, err := os.ReadFile(caConfig)
 	if err != nil {
 		return fmt.Errorf("cannot open config file %s: %s", caConfig, err)
 	}
-
 	caCertCfg := cert.Cert{}
 	if err = yaml.Unmarshal(cfgFile, &caCertCfg); err != nil {
 		return fmt.Errorf("cannot process config file %s: %s", caConfig, err)
@@ -53,16 +63,6 @@ func CreateCACert(certName string, certPath string, keyPEM string, caConfig stri
 		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
 		BasicConstraintsValid: true,
 		IsCA:                  true,
-	}
-
-	// read private key
-	keyPEMFile, err := os.ReadFile(keyPEM)
-	if err != nil {
-		return fmt.Errorf("cannot open private key %s: %s", keyPEM, err)
-	}
-	privateKey, _ := pem.Decode(keyPEMFile)
-	if privateKey == nil {
-		return fmt.Errorf("no PEM data found in file %s", keyPEM)
 	}
 
 	// convert key to RSA

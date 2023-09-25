@@ -39,7 +39,7 @@ var createCert = &cobra.Command{
 		fmt.Println("[+] Creating a CA certificate ...")
 		err := ca.CreateCACert(certPath, certName, keyName, caConfig)
 		if err != nil {
-			fmt.Printf("[-] Cannot create a CA certificate. Error:\n%s\n", err)
+			fmt.Printf("[-] Cannot create CA certificate. Error:\n%s\n", err)
 			os.Exit(2)
 		}
 		fmt.Printf("[+] CA certificate %s created.\n", certName)
