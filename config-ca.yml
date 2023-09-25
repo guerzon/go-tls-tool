@@ -1,9 +1,0 @@
-caCert:
-  serial: 1
-  validForYears: 10
-  subject:
-    country: PH
-    organization: Demolopolis
-    organizationalUnit: Demolopolis OU
-    locality: MNL
-    commonName: Demolopolis CA

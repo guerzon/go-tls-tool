@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -18,18 +19,14 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
+		slog.Error(err.Error())
 		os.Exit(1)
 	}
 }
 
 func init() {
 
-	// not needed atm
-	// cobra.OnInitialize(initConfig)
-
+	// to implement
 	rootCmd.PersistentFlags().StringP("version", "V", "", "Prints the gotls tool version")
 
 }
-
-// func initConfig() {
-// }
