@@ -1,21 +1,51 @@
-# go-tls-tool
+# gochk
 
-SSL/TLS tool written in Go for demo purposes. This is work in progress.
+`gochk` is a command-line tool for various SSL/TLS tasks.
 
-## Howto
+## Usage
 
-Sub-commands:
-
-- `conn` - for interacting with an SSL/TLS endpoint.
-- `ca` - for creating your own CA.
-- `cert` - for working with certificate files.
-
-Use `make` to build the binary:
+Download and run the pre-build binaries:
 
 ```bash
-make build
-./bin/gotls --help
+# todo
 ```
+
+If you have `go` installed, you can build your own binary:
+
+```bash
+go build -o gochk main.go
+./gochk --help
+
+# using make
+make build
+./bin/gochk --help
+```
+
+Sub-commands (see [features](#features) for available commands):
+
+- `ca` - for creating your own CA.
+- `conn` - for interacting with an SSL/TLS endpoint.
+- `cert` - for working with certificate files.
+
+## Features
+
+### Creating your own CA
+
+1. Create the YAML files containing your configuration. For reference, see the example [ca configuration](./ca.yml).
+
+2. Create the private key and the CA certificate:
+
+    ```bash
+    # use all defaults:
+    ./gochk ca
+
+    # specify filenames:
+    ./gochk ca --key private.pem --cert cert.pem
+    ```
+
+## TODO
+
+The following features are not yet implemented.
 
 ### Testing a TLS endpoint
 
@@ -24,21 +54,6 @@ make build
 3. Get validity information.
 4. List valid domains for the certificate.
 5. Check supported ciphers.
-
-### Creating your own CA
-
-1. Create the YAML files containing your configuration. For reference, see:
-
-    - `config-ca.yml` - contains CA info.
-    - `config-certs.yaml` - contains server certificate info.
-
-2. Generate a private key called `private.pem` in the current directory:
-
-    `./bin/gotls ca create-key --key-name private.pem`
-
-3. Create the CA certificate `private.crt`:
-
-    `./bin/gotls ca create-cert --cert-name private.crt  --ca-key private.pem`
 
 ### Working with certificates
 

@@ -1,15 +1,15 @@
-package cert
+package certs
 
 import "math/big"
 
-type Cert struct {
+type Certificate struct {
 	Serial        *big.Int    `yaml:"serial"`
 	ValidForYears int         `yaml:"validForYears"`
-	Subject       CertSubject `yaml:"subject"`
+	Subject       certSubject `yaml:"subject"`
 	DNSNames      []string    `yaml:"dnsNames"`
 }
 
-type CertSubject struct {
+type certSubject struct {
 	Country            string `yaml:"country"`
 	Organization       string `yaml:"organization"`
 	OrganizationalUnit string `yaml:"organizationalUnit"`

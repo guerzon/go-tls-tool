@@ -1,8 +1,8 @@
 build:
-	go build -o ./bin/gotls -ldflags "-s -w" ./cmd/
+	go build -o ./bin/gochk -ldflags "-s -w" main.go
 
 buildwin:
-	GOOS=windows go build -o ./bin/gotls.exe -ldflags "-s -w" ./cmd/
+	GOOS=windows go build -o ./bin/gochk.exe -ldflags "-s -w" main.go
 
 run:
-	go run ./cmd/
+	go run main.go

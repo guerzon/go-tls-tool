@@ -1,4 +1,4 @@
-module github.com/guerzon/go-tls-tool
+module github.com/guerzon/gochk
 
 go 1.21.1
 

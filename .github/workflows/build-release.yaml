@@ -1,0 +1,36 @@
+name: build and release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  release-gochk:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          goos: [linux, windows, darwin]
+          goarch: ["386", amd64, arm64]
+          exclude:
+            - goarch: "386"
+              goos: darwin
+            - goarch: arm64
+              goos: windows
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: wangyoucao577/go-release-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          goversion: 1.21.3
+          project_path: ./cmd/
+          binary_name: "gochk"
+          extra_files: LICENSE README.md

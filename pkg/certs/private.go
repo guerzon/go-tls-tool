@@ -1,4 +1,4 @@
-package ca
+package certs
 
 import (
 	"crypto/rand"
@@ -10,14 +10,13 @@ import (
 	"path/filepath"
 )
 
-// Generate a private key keyName located in keyPath with size keySize.
-// The key is stored as PEM-format.
-func CreatePrivateKey(keyName string, keyPath string, keySize int) error {
+// Generate a private key in PEM-format.
+func CreatePrivateKey(path string, keyName string, keySize int) error {
 
 	// generate the private key
 	privateKey, err := rsa.GenerateKey(rand.Reader, keySize)
 	if err != nil {
-		return fmt.Errorf("cannot generate a private key: %s", err)
+		return fmt.Errorf("cannot generate private key: %s", err)
 	}
 
 	// convert to PEM
@@ -28,9 +27,10 @@ func CreatePrivateKey(keyName string, keyPath string, keySize int) error {
 
 	// convert to bytes
 	privateKeyBytes := pem.EncodeToMemory(&privateKeyPem)
+
 	// write to file
-	if err = os.WriteFile(filepath.Join(keyPath, keyName), privateKeyBytes, 0600); err != nil {
-		return fmt.Errorf("cannot write to file: %s", err)
+	if err = os.WriteFile(filepath.Join(path, keyName), privateKeyBytes, 0600); err != nil {
+		return fmt.Errorf("cannot write key to file: %s", err)
 	}
 
 	return nil
