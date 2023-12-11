@@ -1,7 +1,7 @@
 # gochk
 
 [![MIT Licensed](https://img.shields.io/github/license/guerzon/gochk)](https://github.com/guerzon/vaultwarden/blob/main/LICENSE)
-[![Helm Release](https://img.shields.io/github/v/release/guerzon/gochk)](https://img.shields.io/guerzon/server/latest)
+[![Helm Release](https://img.shields.io/github/v/release/guerzon/gochk)](https://github.com/guerzon/gochk/releases)
 
 `gochk` is a command-line tool for various SSL/TLS tasks.
 
